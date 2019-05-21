@@ -129,6 +129,7 @@ const builds = {
     banner
   },
   // Runtime+compiler production build  (Browser)
+  // vue.js 压缩文件
   'web-full-prod': {
     entry: resolve('web/entry-runtime-with-compiler.js'),
     dest: resolve('dist/vue.min.js'),
