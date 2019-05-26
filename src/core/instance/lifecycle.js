@@ -41,18 +41,18 @@ export function initLifecycle (vm: Component) {
     parent.$children.push(vm)
   }
 
-  vm.$parent = parent
+  vm.$parent = parent // 根元素
   vm.$root = parent ? parent.$root : vm
 
   vm.$children = []
   vm.$refs = {}
 
-  vm._watcher = null
-  vm._inactive = null
+  vm._watcher = null // 监听事件
+  vm._inactive = null // 未在生命周期API出现
   vm._directInactive = false
-  vm._isMounted = false
-  vm._isDestroyed = false
-  vm._isBeingDestroyed = false
+  vm._isMounted = false // 是否挂载实例
+  vm._isDestroyed = false // 是否销毁
+  vm._isBeingDestroyed = false // 
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {

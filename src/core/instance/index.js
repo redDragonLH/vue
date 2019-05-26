@@ -5,13 +5,14 @@ import { eventsMixin } from './events'
 import { lifecycleMixin } from './lifecycle'
 import { warn } from '../util/index'
 
+// vue 起始定义点
 function Vue (options) {
   if (process.env.NODE_ENV !== 'production' &&
     !(this instanceof Vue)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword')
   }
-  this._init(options)
+  this._init(options) // _init 哪来的（initMixin 方法内加入的，所以initMixin必须在最前）
 }
 
 initMixin(Vue)

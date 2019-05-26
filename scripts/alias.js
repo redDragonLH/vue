@@ -7,7 +7,7 @@ module.exports = {
   compiler: resolve('src/compiler'),
   core: resolve('src/core'),
   shared: resolve('src/shared'),
-  web: resolve('src/platforms/web'),
+  web: resolve('src/platforms/web'), // vue .js 生成入口
   weex: resolve('src/platforms/weex'),
   server: resolve('src/server'),
   entries: resolve('src/entries'),
