@@ -119,10 +119,11 @@
     expectsLowerCase
   ) {
     var map = Object.create(null);
-    var list = str.split(',');
+    var list = str.split(',');// 分为数组
     for (var i = 0; i < list.length; i++) {
-      map[list[i]] = true;
+      map[list[i]] = true; // 数组值为键 ，值为 true 全部转化（初始化？）
     }
+    // 返回一个箭头函数，函数传人一个字符串，对象存在此键则返回true
     return expectsLowerCase
       ? function (val) { return map[val.toLowerCase()]; }
       : function (val) { return map[val]; }
@@ -163,6 +164,8 @@
    */
   function cached (fn) {
     var cache = Object.create(null);
+    // 返回 cachedFn ，此时 cachedFn 未运行
+    // 并且 上下文已经绑定 fn
     return (function cachedFn (str) {
       var hit = cache[str];
       return hit || (cache[str] = fn(str))
@@ -577,6 +580,7 @@
   var devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
 
   /* istanbul ignore next */
+  // 判断 函数是否原生函数
   function isNative (Ctor) {
     return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
   }
@@ -624,7 +628,7 @@
       .replace(classifyRE, function (c) { return c.toUpperCase(); })
       .replace(/[-_]/g, ''); };
 
-    warn = function (msg, vm) {
+    warn = function (msg, vm) { // 警告
       var trace = vm ? generateComponentTrace(vm) : '';
 
       if (config.warnHandler) {
@@ -1993,7 +1997,7 @@
   var measure;
 
   {
-    var perf = inBrowser && window.performance;
+    var perf = inBrowser && window.performance; // 开发环境设置
     /* istanbul ignore if */
     if (
       perf &&
@@ -2002,7 +2006,7 @@
       perf.clearMarks &&
       perf.clearMeasures
     ) {
-      mark = function (tag) { return perf.mark(tag); };
+      mark = function (tag) { return perf.mark(tag); }; // 把开始tag 注册 performance（测量浏览器性能API）// 记录时间差
       measure = function (name, startTag, endTag) {
         perf.measure(name, startTag, endTag);
         perf.clearMarks(startTag);
@@ -2781,18 +2785,18 @@
       parent.$children.push(vm);
     }
 
-    vm.$parent = parent;
+    vm.$parent = parent; // 根元素
     vm.$root = parent ? parent.$root : vm;
 
     vm.$children = [];
     vm.$refs = {};
 
-    vm._watcher = null;
-    vm._inactive = null;
+    vm._watcher = null; // 监听事件
+    vm._inactive = null; // 未在生命周期API出现
     vm._directInactive = false;
-    vm._isMounted = false;
-    vm._isDestroyed = false;
-    vm._isBeingDestroyed = false;
+    vm._isMounted = false; // 是否挂载实例
+    vm._isDestroyed = false; // 是否销毁
+    vm._isBeingDestroyed = false; // 
   }
 
   function lifecycleMixin (Vue) {
@@ -4768,15 +4772,15 @@
 
   var uid$2 = 0;
 
-  function initMixin (Vue) {
-    Vue.prototype._init = function (options) {
+  function initMixin (Vue) { // 
+    Vue.prototype._init = function (options) { // 初始化_init方法 参数为一个对象
       var vm = this;
       // a uid
       vm._uid = uid$2++;
 
       var startTag, endTag;
       /* istanbul ignore if */
-      if (config.performance && mark) {
+      if (config.performance && mark) { // 非生产环境添加 性能监听函数
         startTag = "vue-perf-start:" + (vm._uid);
         endTag = "vue-perf-end:" + (vm._uid);
         mark(startTag);
@@ -4784,7 +4788,7 @@
 
       // a flag to avoid this being observed
       vm._isVue = true;
-      // merge options
+      // merge options 合并 
       if (options && options._isComponent) {
         // optimize internal component instantiation
         // since dynamic options merging is pretty slow, and none of the
@@ -4881,12 +4885,13 @@
     return modified
   }
 
+  // vue 起始定义点
   function Vue (options) {
     if (!(this instanceof Vue)
-    ) {
+    ) { // 非构造函数调用报错
       warn('Vue is a constructor and should be called with the `new` keyword');
     }
-    this._init(options);
+    this._init(options); // _init 哪来的（initMixin 方法内加入的，所以initMixin必须在最前）
   }
 
   initMixin(Vue);

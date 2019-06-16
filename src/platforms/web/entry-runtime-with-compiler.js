@@ -4,7 +4,7 @@
  * @type {[type]}
  */
 import config from 'core/config' 
-import { warn, cached } from 'core/util/index'
+import { warn, cached } from 'core/util/index' // cached 缓存
 import { mark, measure } from 'core/util/perf'
 
 import Vue from './runtime/index'

@@ -5,22 +5,22 @@ import { initProxy } from './proxy'
 import { initState } from './state'
 import { initRender } from './render'
 import { initEvents } from './events'
-import { mark, measure } from '../util/perf'
-import { initLifecycle, callHook } from './lifecycle'
+import { mark, measure } from '../util/perf' // 性能监听函数
+import { initLifecycle, callHook } from './lifecycle' // 生命周期
 import { initProvide, initInjections } from './inject'
 import { extend, mergeOptions, formatComponentName } from '../util/index'
 
 let uid = 0
 
 export function initMixin (Vue: Class<Component>) { // 
-  Vue.prototype._init = function (options?: Object) { // 参数为一个对象
+  Vue.prototype._init = function (options?: Object) { // 初始化_init方法 参数为一个对象
     const vm: Component = this
     // a uid
     vm._uid = uid++
 
     let startTag, endTag
     /* istanbul ignore if */
-    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) { // 非生产环境添加 性能监听函数
       startTag = `vue-perf-start:${vm._uid}`
       endTag = `vue-perf-end:${vm._uid}`
       mark(startTag)
@@ -44,12 +44,12 @@ export function initMixin (Vue: Class<Component>) { //
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
       initProxy(vm)
-    } else {
+    } else {// 这才是开发环境使用的
       vm._renderProxy = vm
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
+    initLifecycle(vm) // 初始化生命周期
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
@@ -59,6 +59,7 @@ export function initMixin (Vue: Class<Component>) { //
     callHook(vm, 'created')
 
     /* istanbul ignore if */
+    // 挂载所耗费时间
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false)
       mark(endTag)
@@ -72,7 +73,7 @@ export function initMixin (Vue: Class<Component>) { //
 }
 
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
-  const opts = vm.$options = Object.create(vm.constructor.options)
+  const opts = vm.$options = Object.create(vm.constructor.options) // 创建新对象
   // doing this because it's faster than dynamic enumeration.
   const parentVnode = options._parentVnode
   opts.parent = options.parent

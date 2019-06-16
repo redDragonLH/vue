@@ -108,10 +108,11 @@ export function makeMap (
   expectsLowerCase?: boolean
 ): (key: string) => true | void {
   const map = Object.create(null)
-  const list: Array<string> = str.split(',')
+  const list: Array<string> = str.split(',')// 分为数组
   for (let i = 0; i < list.length; i++) {
-    map[list[i]] = true
+    map[list[i]] = true // 数组值为键 ，值为 true 全部转化（初始化？）
   }
+  // 返回一个箭头函数，函数传人一个字符串，对象存在此键则返回true
   return expectsLowerCase
     ? val => map[val.toLowerCase()]
     : val => map[val]
@@ -152,6 +153,8 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
  */
 export function cached<F: Function> (fn: F): F {
   const cache = Object.create(null)
+  // 返回 cachedFn ，此时 cachedFn 未运行
+  // 并且 上下文已经绑定 fn
   return (function cachedFn (str: string) {
     const hit = cache[str]
     return hit || (cache[str] = fn(str))

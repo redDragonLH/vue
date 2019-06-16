@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
     perf.clearMarks &&
     perf.clearMeasures
   ) {
-    mark = tag => perf.mark(tag) // 把开始tag 注册 performance（测量浏览器性能API）
+    mark = tag => perf.mark(tag) // 把开始tag 注册 performance（测量浏览器性能API）// 记录时间差
     measure = (name, startTag, endTag) => {
       perf.measure(name, startTag, endTag)
       perf.clearMarks(startTag)

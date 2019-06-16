@@ -159,6 +159,8 @@ function hasOwn (obj, key) {
  */
 function cached (fn) {
   var cache = Object.create(null);
+  // 返回 cachedFn ，此时 cachedFn 未运行
+  // 并且 上下文已经绑定 fn
   return (function cachedFn (str) {
     var hit = cache[str];
     return hit || (cache[str] = fn(str))
@@ -608,6 +610,7 @@ if (typeof Set !== 'undefined' && isNative(Set)) {
 
 /*  */
 
+console.log(noop);
 var warn = noop;
 var tip = noop;
 var generateComponentTrace = (noop); // work around flow check
@@ -1989,7 +1992,7 @@ var mark;
 var measure;
 
 {
-  var perf = inBrowser && window.performance;
+  var perf = inBrowser && window.performance; // 开发环境设置
   /* istanbul ignore if */
   if (
     perf &&
@@ -1998,7 +2001,7 @@ var measure;
     perf.clearMarks &&
     perf.clearMeasures
   ) {
-    mark = function (tag) { return perf.mark(tag); };
+    mark = function (tag) { return perf.mark(tag); }; // 把开始tag 注册 performance（测量浏览器性能API）
     measure = function (name, startTag, endTag) {
       perf.measure(name, startTag, endTag);
       perf.clearMarks(startTag);
@@ -2777,18 +2780,18 @@ function initLifecycle (vm) {
     parent.$children.push(vm);
   }
 
-  vm.$parent = parent;
+  vm.$parent = parent; // 根元素
   vm.$root = parent ? parent.$root : vm;
 
   vm.$children = [];
   vm.$refs = {};
 
-  vm._watcher = null;
-  vm._inactive = null;
+  vm._watcher = null; // 监听事件
+  vm._inactive = null; // 未在生命周期API出现
   vm._directInactive = false;
-  vm._isMounted = false;
-  vm._isDestroyed = false;
-  vm._isBeingDestroyed = false;
+  vm._isMounted = false; // 是否挂载实例
+  vm._isDestroyed = false; // 是否销毁
+  vm._isBeingDestroyed = false; // 
 }
 
 function lifecycleMixin (Vue) {
@@ -4764,8 +4767,8 @@ function renderMixin (Vue) {
 
 var uid$2 = 0;
 
-function initMixin (Vue) {
-  Vue.prototype._init = function (options) {
+function initMixin (Vue) { // 
+  Vue.prototype._init = function (options) { // 参数为一个对象
     var vm = this;
     // a uid
     vm._uid = uid$2++;
@@ -4780,7 +4783,7 @@ function initMixin (Vue) {
 
     // a flag to avoid this being observed
     vm._isVue = true;
-    // merge options
+    // merge options 合并 
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
@@ -4877,12 +4880,13 @@ function resolveModifiedOptions (Ctor) {
   return modified
 }
 
+// vue 起始定义点
 function Vue (options) {
   if (!(this instanceof Vue)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword');
   }
-  this._init(options);
+  this._init(options); // _init 哪来的（initMixin 方法内加入的，所以initMixin必须在最前）
 }
 
 initMixin(Vue);

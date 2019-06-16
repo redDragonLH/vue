@@ -9,7 +9,7 @@ import { warn } from '../util/index'
 function Vue (options) {
   if (process.env.NODE_ENV !== 'production' &&
     !(this instanceof Vue)
-  ) {
+  ) { // 非构造函数调用报错
     warn('Vue is a constructor and should be called with the `new` keyword')
   }
   this._init(options) // _init 哪来的（initMixin 方法内加入的，所以initMixin必须在最前）
