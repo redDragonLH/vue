@@ -320,8 +320,12 @@ export function stateMixin (Vue: Class<Component>) {
   // flow somehow has problems with directly declared definition object
   // when using Object.defineProperty, so we have to procedurally build up
   // the object here.
+
+// 当使用Object.defineProperty时，
+// 流以某种方式存在直接声明的定义对象的问题，
+// 所以我们必须在这里以程序方式构建对象。
   const dataDef = {}
-  dataDef.get = function () { return this._data }
+  dataDef.get = function () { return this._data } // 
   const propsDef = {}
   propsDef.get = function () { return this._props }
   if (process.env.NODE_ENV !== 'production') {
@@ -336,6 +340,8 @@ export function stateMixin (Vue: Class<Component>) {
       warn(`$props is readonly.`, this)
     }
   }
+  // Object.defineProperty 在对象上定义一个新属性，或修改一个对象现有属性并返回
+  //                      对象          属性名   数据描述符
   Object.defineProperty(Vue.prototype, '$data', dataDef)
   Object.defineProperty(Vue.prototype, '$props', propsDef)
 

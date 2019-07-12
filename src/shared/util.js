@@ -67,8 +67,8 @@ export function isRegExp (v: any): boolean {
  * Check if val is a valid array index.
  */
 export function isValidArrayIndex (val: any): boolean {
-  const n = parseFloat(String(val))
-  return n >= 0 && Math.floor(n) === n && isFinite(val)
+  const n = parseFloat(String(val))  // 获取 数组转为字符串再转数字后的返回值
+  return n >= 0 && Math.floor(n) === n && isFinite(val) // 返回值大于0 并且没有小数点并且是一个数字
 }
 
 export function isPromise (val: any): boolean {
