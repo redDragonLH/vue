@@ -16,11 +16,11 @@ import { SSR_ATTR } from 'shared/constants'
 import { registerRef } from './modules/ref'
 import { traverse } from '../observer/traverse'
 import { activeInstance } from '../instance/lifecycle'
-import { isTextInputType } from 'web/util/element'
+import { isTextInputType } from 'web/util/element' // 判断输入框类型
 
 import {
   warn,
-  isDef,
+  isDef,  // 为空 判断
   isUndef,
   isTrue,
   makeMap,
@@ -29,7 +29,7 @@ import {
 } from '../util/index'
 
 export const emptyNode = new VNode('', {}, [])
-
+//              创建       启用         更新    删除        销毁
 const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
 
 function sameVnode (a, b) {
@@ -81,7 +81,7 @@ export function createPatchFunction (backend) {
       }
     }
   }
-
+  // 创建空vnode
   function emptyNodeAt (elm) {
     return new VNode(nodeOps.tagName(elm).toLowerCase(), {}, [], undefined, elm)
   }

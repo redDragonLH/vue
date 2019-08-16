@@ -1,5 +1,7 @@
 /* @flow */
-
+/**
+ * 定义虚拟dom构造函数 
+ */
 export default class VNode {
   tag: string | void;
   data: VNodeData | void;

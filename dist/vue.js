@@ -10,29 +10,31 @@
 }(this, function () { 'use strict';
 
   /*  */
-
+// 创建一个空的冻结属性
   var emptyObject = Object.freeze({});
 
   // These helpers produce better VM code in JS engines due to their
   // explicitness and function inlining.
+  // 判断为空
   function isUndef (v) {
     return v === undefined || v === null
   }
-
+// 判断不为空
   function isDef (v) {
     return v !== undefined && v !== null
   }
-
+// true
   function isTrue (v) {
     return v === true
   }
-
+// false
   function isFalse (v) {
     return v === false
   }
 
   /**
    * Check if value is primitive.
+   * 检查数据是否原始函数
    */
   function isPrimitive (value) {
     return (
@@ -49,6 +51,7 @@
    * Objects from primitive values when we know the value
    * is a JSON-compliant type.
    */
+  // 对象是一个正常对象
   function isObject (obj) {
     return obj !== null && typeof obj === 'object'
   }
@@ -56,8 +59,9 @@
   /**
    * Get the raw type string of a value, e.g., [object Object].
    */
-  var _toString = Object.prototype.toString;
 
+  var _toString = Object.prototype.toString;
+// 获取数据类型
   function toRawType (value) {
     return _toString.call(value).slice(8, -1)
   }
@@ -66,10 +70,11 @@
    * Strict object type check. Only returns true
    * for plain JavaScript objects.
    */
+  // object 类型判断
   function isPlainObject (obj) {
     return _toString.call(obj) === '[object Object]'
   }
-
+// 正则类型判断
   function isRegExp (v) {
     return _toString.call(v) === '[object RegExp]'
   }
@@ -81,7 +86,7 @@
     var n = parseFloat(String(val));
     return n >= 0 && Math.floor(n) === n && isFinite(val)
   }
-
+  // 判断 是否 Promise类型
   function isPromise (val) {
     return (
       isDef(val) &&
@@ -93,11 +98,12 @@
   /**
    * Convert a value to a string that is actually rendered.
    */
+  // to string
   function toString (val) {
     return val == null
       ? ''
       : Array.isArray(val) || (isPlainObject(val) && val.toString === _toString)
-        ? JSON.stringify(val, null, 2)
+        ? JSON.stringify(val, null, 2)// 数组或者对象序列化
         : String(val)
   }
 
@@ -140,6 +146,7 @@
 
   /**
    * Remove an item from an array.
+   * 移除数组
    */
   function remove (arr, item) {
     if (arr.length) {
