@@ -1,7 +1,7 @@
 /* @flow */
 
 import config from '../config'
-import { noop } from 'shared/util'
+import { noop } from 'shared/util' // noop: 空函数
 
 export let warn = noop
 export let tip = noop
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
     .replace(classifyRE, c => c.toUpperCase())
     .replace(/[-_]/g, '')
 
-  warn = (msg, vm) => {
+  warn = (msg, vm) => { // 警告
     const trace = vm ? generateComponentTrace(vm) : ''
 
     if (config.warnHandler) {

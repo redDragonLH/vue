@@ -117,6 +117,8 @@ function hasOwn (obj, key) {
  */
 function cached (fn) {
   var cache = Object.create(null);
+  // 返回 cachedFn ，此时 cachedFn 未运行
+  // 并且 上下文已经绑定 fn
   return (function cachedFn (str) {
     var hit = cache[str];
     return hit || (cache[str] = fn(str))
@@ -867,6 +869,7 @@ var config = ({
 
 /*  */
 
+console.log(noop);
 var warn = noop;
 var tip = noop;
 var generateComponentTrace = (noop); // work around flow check

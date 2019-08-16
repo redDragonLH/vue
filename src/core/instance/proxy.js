@@ -1,7 +1,16 @@
 /* not type checking this file because flow doesn't play well with Proxy */
+// 挂载 Proxy 的处理文件
 
+/**
+ * Proxy ： 定义基本操作的自定义行为
+ * 就是拦截各个操作，比如get,Set等 
+ * 
+ * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+ *
+ * 是vue的核心处理函数
+ */
 import config from 'core/config'
-import { warn, makeMap, isNative } from '../util/index'
+import { warn, makeMap, isNative } from '../util/index' //
 
 let initProxy
 
@@ -33,7 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
       target
     )
   }
-
+  // 判断 Proxy 是否是原生函数 （Proxy 代理函数）
   const hasProxy =
     typeof Proxy !== 'undefined' && isNative(Proxy)
 
@@ -53,7 +62,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   const hasHandler = {
-    has (target, key) {
+    has (target, key) { // 拦截 in 操作
       const has = key in target
       const isAllowed = allowedGlobals(key) ||
         (typeof key === 'string' && key.charAt(0) === '_' && !(key in target.$data))
@@ -66,7 +75,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   const getHandler = {
-    get (target, key) {
+    get (target, key) { // 拦截获取 操作
       if (typeof key === 'string' && !(key in target)) {
         if (key in target.$data) warnReservedPrefix(target, key)
         else warnNonPresent(target, key)
@@ -76,7 +85,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 
   initProxy = function initProxy (vm) {
-    if (hasProxy) {
+    if (hasProxy) { // 是否有原生 Proxy
       // determine which proxy handler to use
       const options = vm.$options
       const handlers = options.render && options.render._withStripped

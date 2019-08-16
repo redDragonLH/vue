@@ -3,7 +3,7 @@
 import config from '../config'
 import Watcher from '../observer/watcher'
 import { mark, measure } from '../util/perf'
-import { createEmptyVNode } from '../vdom/vnode'
+import { createEmptyVNode } from '../vdom/vnode' // 应该是虚拟dom吧
 import { updateComponentListeners } from './events'
 import { resolveSlots } from './render-helpers/resolve-slots'
 import { toggleObserving } from '../observer/index'
@@ -30,7 +30,7 @@ export function setActiveInstance(vm: Component) {
 }
 
 export function initLifecycle (vm: Component) {
-  const options = vm.$options
+  const options = vm.$options // 各种参数吧
 
   // locate first non-abstract parent
   let parent = options.parent
